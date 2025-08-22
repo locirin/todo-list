@@ -1,0 +1,13 @@
+.todo-item {
+  margin: 4px 0;
+}
+
+.todo-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.todo-title {
+  line-height: 1.4;
+}
