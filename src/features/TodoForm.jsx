@@ -20,23 +20,12 @@ function TodoForm({ onAddTodo }) {
   return (
     <form onSubmit={handleAddTodo}>
       <TextInputWithLabel
-        id="todoTitle"
-        name="title"
-        value={workingTodoTitle}
-        onChange={(e) => setWorkingTodoTitle(e.target.value)}
-        inputRef={inputRef}
-      >
-        Todo
-      </TextInputWithLabel>
-      {/* <label htmlFor="todoTitle">Todo</label>
-      <input
-        id="todoTitle"
-        name="title"
-        type="text"
+        elementId="todoTitle"
+        labelText="Todo"
         value={workingTodoTitle}
         onChange={(e) => setWorkingTodoTitle(e.target.value)}
         ref={inputRef}
-      /> */}
+      />
       <button type="submit" disabled={workingTodoTitle.trim() === ''}>
         Add Todo
       </button>

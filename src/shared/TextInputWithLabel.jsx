@@ -1,23 +1,19 @@
-export default function TextInputWithLabel({
-  id,
-  name,
-  type = 'text',
-  value,
-  onChange,
-  children,
-  inputRef,
-}) {
+{
+  /*extract from TextInputWithLabel.jsx*/
+}
+function TextInputWithLabel({ elementId, labelText, onChange, ref, value }) {
   return (
     <>
-      <label htmlFor={id}>{children}</label>
+      <label htmlFor={elementId}>{labelText}</label>
       <input
-        id={id}
-        name={name}
-        type={type}
+        type="text"
+        id={elementId}
+        ref={ref}
         value={value}
         onChange={onChange}
-        ref={inputRef}
       />
     </>
   );
 }
+
+export default TextInputWithLabel;
