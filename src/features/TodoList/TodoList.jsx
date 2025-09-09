@@ -1,13 +1,23 @@
 import TodoListItem from './TodoListItem';
 
-function TodoList({ todoList, onCompleteTodo, onUpdateTodo }) {
-  //  sifting out completed todo tasks
+function TodoList({
+  todoList,
+  isLoading,
+  error,
+  onCompleteTodo,
+  onUpdateTodo,
+}) {
+  if (isLoading) {
+    return <p>Todo list loading...</p>;
+  }
+  if (error) {
+    return <p style={{ color: 'red' }}>{error}</p>;
+  }
   const visible = todoList.filter((t) => !t.isCompleted);
-  // displaying msg in no uncompleted todo tasks listed
+
   if (visible.length === 0) {
     return <p>Add a todo above to get started</p>;
   }
-  // rendering uncompleted todo tasks only
   return (
     <ul>
       {visible.map((todo) => (

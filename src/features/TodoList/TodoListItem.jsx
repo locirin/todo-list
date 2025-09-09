@@ -9,12 +9,15 @@ function TodoListItem({ todo, onCompleteTodo, onUpdateTodo }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    if (isEditing) {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
+    if (isEditing && inputRef.current) {
+      // if (inputRef.current) {
+      inputRef.current.focus();
     }
   }, [isEditing]);
+
+  useEffect(() => {
+    setWorkingTitle(todo.title);
+  }, [todo]);
 
   function handleCancel() {
     setWorkingTitle(todo.title);
