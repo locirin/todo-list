@@ -1,0 +1,4 @@
+/* Bottom padding to list items */
+.todoListItem {
+  padding-bottom: 0.5rem;
+}

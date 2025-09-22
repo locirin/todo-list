@@ -1,0 +1,6 @@
+/* Remove default ul padding + bullets*/
+.todoList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}

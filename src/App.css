@@ -1,3 +1,56 @@
+/* LAYOUT basic */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f9f9f9; /* minimalistik light background */
+  color: #222; /* dark gray text */
+  font-family: Arial, sans-serif;
+}
+#root {
+  min-height: 100vh;
+}
+
+/* TYPOGRAPHY */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* BUTTON - common style */
+button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #f0f0f0;
+}
+
+/* INPUT - common style */
+input[type='text'],
+input[type='search'],
+input[type='email'],
+input[type='password'] {
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* COMPONENT */
+
 .todo-item {
   margin: 4px 0;
 }

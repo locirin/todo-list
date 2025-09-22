@@ -1,4 +1,5 @@
 import TodoListItem from './TodoListItem';
+import styles from './TodoList.module.css';
 
 function TodoList({
   todoList,
@@ -19,7 +20,7 @@ function TodoList({
     return <p>Add a todo above to get started</p>;
   }
   return (
-    <ul>
+    <ul className={styles.todoList}>
       {visible.map((todo) => (
         <TodoListItem
           key={todo.id}

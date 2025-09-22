@@ -1,0 +1,42 @@
+/* Center the app in the body */
+.appContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  gap: 2rem; /* Adding space between left and right sides */
+}
+
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Adding space between header, form, filters */
+  min-width: 280px;  /* Adding a base width */
+}
+
+.rightColumn {
+  flex: 1;
+  margin-top: 2rem; /* Alligning list with form level */
+}
+
+/* Error message box */
+.errorBox {
+  border: 1px solid red;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background: #ffecec;
+  color: #900;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+}
