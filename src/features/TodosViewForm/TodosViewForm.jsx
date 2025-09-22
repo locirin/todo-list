@@ -1,4 +1,29 @@
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+// Styled-Components
+const StyledForm = styled.form`
+  padding: 0.5rem; /* Adding spacing inside the form */
+  gap: 0.75rem; /* Adding space between Search row and Sort row */
+  display: flex;
+  flex-direction: column;
+`;
+
+const StyledInput = styled.input`
+  margin-right: 0.5rem;
+  padding: 0.25rem;
+`;
+
+const StyledSelect = styled.select`
+  margin-right: 0.5rem;
+  padding: 0.25rem;
+`;
+
+const StyledButton = styled.button`
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+`;
+
 function TodosViewForm({
   sortField,
   setSortField,
@@ -21,22 +46,22 @@ function TodosViewForm({
     e.preventDefault();
   };
   return (
-    <form onSubmit={preventRefresh}>
+    <StyledForm onSubmit={preventRefresh}>
       <div>
         <label htmlFor="search">Search todos:</label>
-        <input
+        <StyledInput
           id="search"
           type="text"
           value={localQueryString}
           onChange={(e) => setLocalQueryString(e.target.value)}
         />
-        <button type="button" onClick={() => setLocalQueryString('')}>
+        <StyledButton type="button" onClick={() => setLocalQueryString('')}>
           Clear
-        </button>
+        </StyledButton>
       </div>
       <div>
         <label htmlFor="sortBy">Sort by</label>
-        <select
+        <StyledSelect
           id="sortBy"
           name="sortBy"
           value={sortField}
@@ -44,9 +69,9 @@ function TodosViewForm({
         >
           <option value="title">Title</option>
           <option value="createdTime">Time added</option>
-        </select>
+        </StyledSelect>
         <label htmlFor="sortDirection">Direction</label>
-        <select
+        <StyledSelect
           id="sortDirection"
           name="sortDirection"
           value={sortDirection}
@@ -54,9 +79,9 @@ function TodosViewForm({
         >
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
-        </select>
+        </StyledSelect>
       </div>
-    </form>
+    </StyledForm>
   );
 }
 

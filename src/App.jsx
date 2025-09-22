@@ -1,8 +1,10 @@
 import './App.css';
+import styles from './App.module.css';
 import { useState, useEffect, useCallback } from 'react';
 import TodoForm from './features/TodoForm';
 import TodoList from './features/TodoList/TodoList';
 import TodosViewForm from './features/TodosViewForm/TodosViewForm';
+import logo from './assets/logo.svg';
 
 function makeOptions(method, token, payload = null) {
   const options = {
@@ -203,11 +205,25 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>My Todos</h1>
-      <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
+    <div className={styles.appContainer}>
+      <div className={styles.leftColumn}>
+        <h1 className={styles.title}>
+          <img src={logo} alt="" className={styles.logo} />
+          My Todos
+        </h1>
+        <TodoForm onAddTodo={addTodo} isSaving={isSaving} />
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+        <TodosViewForm
+          sortField={sortField}
+          setSortField={setSortField}
+          sortDirection={sortDirection}
+          setSortDirection={setSortDirection}
+          queryString={queryString}
+          setQueryString={setQueryString}
+        />
+      </div>
+      <div className={styles.rightColumn}>
+      {error && <div className={styles.errorBox}> {error}</div>}
 
       <TodoList
         todoList={todoList}
@@ -218,15 +234,7 @@ function App() {
       />
 
       <hr />
-
-      <TodosViewForm
-        sortField={sortField}
-        setSortField={setSortField}
-        sortDirection={sortDirection}
-        setSortDirection={setSortDirection}
-        queryString={queryString}
-        setQueryString={setQueryString}
-      />
+    </div>
     </div>
   );
 }
