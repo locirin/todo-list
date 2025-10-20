@@ -50,7 +50,7 @@ Required actions:
 
 import './App.css';
 import styles from './App.module.css';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import TodoForm from './features/TodoForm';
 import TodoList from './features/TodoList/TodoList';
 import TodosViewForm from './features/TodosViewForm/TodosViewForm';
@@ -89,16 +89,17 @@ const token = `Bearer ${import.meta.env.VITE_PAT}`;
 
 function App() {
   const [todoState, dispatch] = useReducer(reducer, initialTodosState);
+  const [title, setTitle] = useState('Todo List');
 
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === '/') {
-      document.title = 'Todo List';
+      setTitle('Todo List');
     } else if (location.pathname === '/about') {
-      document.title = 'About';
+      setTitle('About');
     } else {
-      document.title = 'Not Found';
+      setTitle('Not Found');
     }
   }, [location]);
 
@@ -245,7 +246,7 @@ function App() {
   return (
     <div className={styles.appContainer}>
       <div className={styles.leftColumn}>
-        <Header title="My Todos" />
+        <Header title={title} />
         <Routes>
           <Route
             path="/"
