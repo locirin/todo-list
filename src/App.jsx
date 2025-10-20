@@ -50,10 +50,11 @@ Required actions:
 
 import './App.css';
 import styles from './App.module.css';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import TodoForm from './features/TodoForm';
 import TodoList from './features/TodoList/TodoList';
 import TodosViewForm from './features/TodosViewForm/TodosViewForm';
+import TodosPage from './pages/TodosPage';
 import logo from './assets/logo.svg';
 import { useReducer } from 'react';
 import {
@@ -61,6 +62,11 @@ import {
   actions as todoActions,
   initialState as initialTodosState,
 } from './reducers/todos.reducer';
+import Header from './shared/Header';
+import { useLocation } from 'react-router';
+import { Routes, Route } from 'react-router';
+import About from './pages/About';
+import NotFound from './pages/NotFound';
 
 function makeOptions(method, token, payload = null) {
   const options = {
@@ -83,6 +89,19 @@ const token = `Bearer ${import.meta.env.VITE_PAT}`;
 
 function App() {
   const [todoState, dispatch] = useReducer(reducer, initialTodosState);
+  const [title, setTitle] = useState('Todo List');
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setTitle('Todo List');
+    } else if (location.pathname === '/about') {
+      setTitle('About');
+    } else {
+      setTitle('Not Found');
+    }
+  }, [location]);
 
   const encodeUrl = useCallback(() => {
     let sortQuery = `sort[0][field]=${todoState.sortField}&sort[0][direction]=${todoState.sortDirection}`;
@@ -151,9 +170,12 @@ function App() {
       }
       const { records } = await resp.json();
 
-      // const savedTodo = mapRecordToTodo(records[0]);
-
-      dispatch({ type: todoActions.addTodo, savedTodo: records[0] });
+      const savedTodo = {
+        id: records[0].id,
+        title: records[0].fields?.title ?? '',
+        isCompleted: Boolean(records[0].fields?.isCompleted),
+      };
+      dispatch({ type: todoActions.addTodo, savedTodo });
 
       dispatch({ type: todoActions.endRequest });
     } catch (err) {
@@ -162,10 +184,6 @@ function App() {
   };
 
   const completeTodo = async (id) => {
-    // const originalTodo = state.todoList.find((todo) => todo.id === id);
-    // const updatedTodos = state.todoList.map((todo) =>
-    //   todo.id === id ? { ...todo, isCompleted: true } : todo
-    // );
     dispatch({ type: todoActions.completeTodo, id });
     const payload = {
       records: [
@@ -198,12 +216,6 @@ function App() {
   };
 
   const updateTodo = async (editedTodo) => {
-    // const originalTodo = state.todoList.find(
-    //   (todo) => todo.id === editedTodo.id
-    // );
-    // const updatedTodos = state.todoList.map((todo) =>
-    //   todo.id === editedTodo.id ? { ...editedTodo } : todo
-    // );
     dispatch({ type: todoActions.updateTodo, editedTodo });
 
     const payload = {
@@ -234,26 +246,24 @@ function App() {
   return (
     <div className={styles.appContainer}>
       <div className={styles.leftColumn}>
-        <h1 className={styles.title}>
-          <img src={logo} alt="" className={styles.logo} />
-          My Todos
-        </h1>
-        <TodoForm onAddTodo={addTodo} isSaving={todoState.isSaving} />
-
-        <TodosViewForm
-          sortField={todoState.sortField}
-          setSortField={(field) =>
-            dispatch({ type: todoActions.setSortField, sortField: field })
-          }
-          sortDirection={todoState.sortDirection}
-          setSortDirection={(dir) =>
-            dispatch({ type: todoActions.setSortDirection, sortDirection: dir })
-          }
-          queryString={todoState.queryString}
-          setQueryString={(query) =>
-            dispatch({ type: todoActions.setQueryString, queryString: query })
-          }
-        />
+        <Header title={title} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <TodosPage
+                todoState={todoState}
+                addTodo={addTodo}
+                completeTodo={completeTodo}
+                updateTodo={updateTodo}
+                dispatch={dispatch}
+                todoActions={todoActions}
+              />
+            }
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
       </div>
       <div className={styles.rightColumn}>
         {todoState.errorMessage && (
@@ -264,15 +274,6 @@ function App() {
             </button>
           </div>
         )}
-
-        <TodoList
-          todoList={todoState.todoList}
-          isLoading={todoState.isLoading}
-          error={todoState.errorMessage}
-          onCompleteTodo={completeTodo}
-          onUpdateTodo={updateTodo}
-        />
-
         <hr />
       </div>
     </div>
